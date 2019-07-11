@@ -3,6 +3,31 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+
+## DB (mySql)
+
+USE management;
+
+CREATE TABLE CUSTOMER (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	image VARCHAR(1024),
+	name VARCHAR(64),
+	birthday VARCHAR(64),
+	gender VARCHAR(64),
+	job VARCHAR(64)
+) DEFAULT CHARACTER SET UTF8 COLLATE utf8_general_ci;
+
+INSERT INTO CUSTOMER VALUES 
+(3, 'https://placeimg.com/6464/1','임호2','941108','남자','백수');
+
+
+Alter table CUSTOMER ADD createDate DATETIME;
+Alter table CUSTOMER ADD isDeleted INT;
+
+UPDATE CUSTOMER SET createDate = NOW();
+UPDATE CUSTOMER SET isDeleted = 0;
+
+
 ## Available Scripts
 
 In the project directory, you can run:

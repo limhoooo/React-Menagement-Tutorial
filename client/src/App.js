@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import Customer from '../src/components/Customer';
+import CustomerAdd from '../src/components/CustomerAdd';
 import './App.css';
 import Paper from '@material-ui/core/Paper'
 import Table from '@material-ui/core/Table'
@@ -40,12 +41,23 @@ class App extends Component {
     }
   }
 
+  stateRefresh = () => {
+    this.setState({
+      customers:"",
+      completed: 0
+    });
+    this.callApi()
+    .then(res => this.setState({customers:res}))
+    .catch(err => console.log(err));
+  }
+
 ///////////////////////////////////////
   componentDidMount(){
     this.timer = setInterval(this.progress, 20);
-    // this.callApi()
-    // .then(res => this.setState({customers:res}))
-    // .catch(err => console.log(err));
+    this.callApi()
+    .then(res => this.setState({customers:res}))
+    .catch(err => console.log(err));
+    
   }
 
   callApi = async ()=>{
@@ -62,7 +74,9 @@ class App extends Component {
   
   render(){
     const {classes} = this.props;
+    
     return (
+      <div>
       <Paper className={classes.root}>
         
           
@@ -75,6 +89,7 @@ class App extends Component {
                   <TableCell>생년월일</TableCell>
                   <TableCell>생일</TableCell>
                   <TableCell>직업</TableCell>
+                  <TableCell>설정</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -88,6 +103,7 @@ class App extends Component {
                         birthday={c.birthday}
                         gender={c.gender}
                         job={c.job}
+                        stateRefresh = {this.stateRefresh}
                       />
                       )
                       }) : 
@@ -104,6 +120,9 @@ class App extends Component {
          
         
       </Paper>
+      <CustomerAdd stateRefresh = {this.stateRefresh}/>
+      </div>
+
     )
   }
 }
